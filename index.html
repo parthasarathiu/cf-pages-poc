@@ -1,11 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cloudflare CI/CD POC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg-1: #0f172a; /* deep navy */
+      --accent-1: #7c3aed; /* violet */
+      --accent-2: #06b6d4; /* teal */
+      --card: rgba(255,255,255,0.06);
+      --glass: rgba(255,255,255,0.06);
+      --muted: rgba(255,255,255,0.75);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent 10%),
+                  radial-gradient(1000px 500px at 90% 90%, rgba(6,182,212,0.08), transparent 8%),
+                  linear-gradient(180deg,var(--bg-1), #071029 80%);
+      color: white;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:48px 24px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+    }
+    .container{max-width:1100px;width:100%}
+    header{
+      display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;
+    }
+    .brand{display:flex;align-items:center;gap:14px}
+    .logo{
+      width:56px;height:56px;border-radius:12px;
+      background:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+      display:flex;align-items:center;justify-content:center;font-weight:800;color:rgba(255,255,255,0.95);
+      box-shadow:0 6px 18px rgba(2,6,23,0.6), inset 0 -6px 18px rgba(255,255,255,0.04);
+      font-family:monospace
+    }
+    h1{font-size:20px;margin:0}
+    .tagline{color:var(--muted);font-size:13px}
+
+    main{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start}
+    @media (max-width:880px){main{grid-template-columns:1fr;}}
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:14px;padding:22px;box-shadow:0 8px 30px rgba(2,6,23,0.6);backdrop-filter: blur(6px);
+      border:1px solid rgba(255,255,255,0.04);
+    }
+    .hero{
+      padding:36px;border-radius:14px;overflow:hidden;position:relative;
+      background:linear-gradient(135deg, rgba(124,58,237,0.12), rgba(6,182,212,0.06));
+    }
+    .hero h2{margin:0 0 8px;font-size:28px}
+    .hero p{margin:0;color:var(--muted)}
+
+    .meta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+    .pill{background:var(--card);padding:8px 12px;border-radius:999px;font-weight:600;color:var(--muted);font-size:13px}
+
+    .sidebar .stat{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px dashed rgba(255,255,255,0.03)}
+    .stat:last-child{border-bottom:0}
+    .stat strong{font-size:18px}
+
+    footer{margin-top:28px;text-align:center;color:rgba(255,255,255,0.6);font-size:13px}
+
+    /* subtle animated gradient blob */
+    .blob{
+      position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:48%;
+      background:linear-gradient(45deg,var(--accent-1),var(--accent-2));opacity:0.08;filter:blur(40px);transform:rotate(20deg);
+      animation:float 8s ease-in-out infinite;
+    }
+    @keyframes float{0%{transform:translateY(0) rotate(10deg)}50%{transform:translateY(8px) rotate(-6deg)}100%{transform:translateY(0) rotate(10deg)}}
+  </style>
 </head>
 <body>
-  <h1>Cloudflare Pages CI/CD POC</h1>
-  <p>Version 1 - deployed from main branch.</p>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">CF</div>
+        <div>
+          <h1>Cloudflare Pages CI/CD POC</h1>
+          <div class="tagline">Version 1 — deployed from <code>main</code></div>
+        </div>
+      </div>
+      <div class="actions">
+        <span class="pill">Live</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="card hero">
+        <div class="blob" aria-hidden="true"></div>
+        <h2>Fast Deploys · Instant Previews</h2>
+        <p>Proof-of-concept demo for Cloudflare Pages continuous deployment. Clean, colorful UI to show status and links.</p>
+
+        <div class="meta">
+          <div class="pill">Branch: <strong style="margin-left:8px;">main</strong></div>
+          <div class="pill">Provider: <strong style="margin-left:8px;">Cloudflare</strong></div>
+          <div class="pill">Type: <strong style="margin-left:8px;">Static site</strong></div>
+        </div>
+
+        <div style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+          <div class="card" style="padding:12px">
+            <strong>Build Status</strong>
+            <div style="color:var(--muted);margin-top:8px">Succeeded</div>
+          </div>
+          <div class="card" style="padding:12px">
+            <strong>Last Deployed</strong>
+            <div style="color:var(--muted);margin-top:8px">Just now</div>
+          </div>
+          <div class="card" style="padding:12px">
+            <strong>Preview</strong>
+            <div style="color:var(--muted);margin-top:8px">Available</div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="sidebar">
+        <div class="card">
+          <h3 style="margin-top:0">Quick Stats</h3>
+          <div class="stat"><span>Requests / min</span><strong>42</strong></div>
+          <div class="stat"><span>Bandwidth</span><strong>1.2 GB</strong></div>
+          <div class="stat"><span>Uptime</span><strong>99.99%</strong></div>
+        </div>
+        <div class="card" style="margin-top:14px">
+          <h4 style="margin:0 0 8px 0">Helpful Links</h4>
+          <ul style="padding-left:18px;margin:0;color:var(--muted)">
+            <li><a href="#" style="color:inherit;text-decoration:underline;">Dashboard</a></li>
+            <li><a href="#" style="color:inherit;text-decoration:underline;">Deploy Logs</a></li>
+            <li><a href="#" style="color:inherit;text-decoration:underline;">Settings</a></li>
+          </ul>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      Built with care · Cloudflare Pages POC
+    </footer>
+  </div>
 </body>
 </html>
